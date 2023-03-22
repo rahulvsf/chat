@@ -29,7 +29,8 @@ import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import * as openapi from './openapi.json';
-import { LocalSignUpProvider } from './providers/local-signup.provider';
+import {LocalSignUpProvider} from './providers/local-signup.provider';
+import {LocalSignUpTokenHandlerProvider} from './providers/local-signup-token-handler.provider';
 
 export {ApplicationConfig};
 
@@ -83,6 +84,9 @@ export class AuthServiceApplication extends BootMixin(
 
     this.bind(SignUpBindings.LOCAL_SIGNUP_PROVIDER).toProvider(
       LocalSignUpProvider,
+    );
+    this.bind(SignUpBindings.SIGNUP_HANDLER_PROVIDER).toProvider(
+      LocalSignUpTokenHandlerProvider,
     );
 
     // Add bearer verifier component
