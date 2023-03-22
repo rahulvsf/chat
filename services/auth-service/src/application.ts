@@ -20,12 +20,16 @@ import {
   BearerVerifierType,
   SECURITY_SCHEME_SPEC,
 } from '@sourceloop/core';
-import {AuthenticationServiceComponent} from '@sourceloop/authentication-service';
+import {
+  AuthenticationServiceComponent,
+  SignUpBindings,
+} from '@sourceloop/authentication-service';
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import * as openapi from './openapi.json';
+import { LocalSignUpProvider } from './providers/local-signup.provider';
 
 export {ApplicationConfig};
 
@@ -76,6 +80,10 @@ export class AuthServiceApplication extends BootMixin(
     this.component(AuthenticationComponent);
 
     this.component(AuthenticationServiceComponent);
+
+    this.bind(SignUpBindings.LOCAL_SIGNUP_PROVIDER).toProvider(
+      LocalSignUpProvider,
+    );
 
     // Add bearer verifier component
     this.bind(BearerVerifierBindings.Config).to({
