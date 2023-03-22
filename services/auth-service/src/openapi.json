@@ -1378,6 +1378,32 @@
         "operationId": "ForgetPasswordController.verifyResetPasswordLink"
       }
     },
+    "/auth-client": {
+      "post": {
+        "x-controller-name": "AuthClientController",
+        "x-operation-name": "createAuthClient",
+        "tags": [
+          "AuthClientController"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Return value of AuthClientController.createAuthClient",
+            "content": {}
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthClientExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy_"
+              }
+            }
+          }
+        },
+        "operationId": "AuthClientController.createAuthClient"
+      }
+    },
     "/keycloak/logout": {
       "post": {
         "x-controller-name": "LogoutController",
@@ -1954,6 +1980,48 @@
           "email"
         ],
         "additionalProperties": false
+      },
+      "AuthClientExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy_": {
+        "title": "AuthClientExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy_",
+        "type": "object",
+        "description": "(tsType: Omit<AuthClient, 'deleted' | 'deletedBy' | 'deletedOn' | 'createdOn' | 'createdBy' | 'modifiedOn' | 'modifiedBy' | 'createdBy'>, schemaOptions: { exclude: [ 'deleted', 'deletedBy', 'deletedOn', 'createdOn', 'createdBy', 'modifiedOn', 'modifiedBy', 'createdBy' ] })",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "clientId": {
+            "type": "string"
+          },
+          "clientSecret": {
+            "type": "string"
+          },
+          "secret": {
+            "type": "string",
+            "description": "Value can be a string or a private key."
+          },
+          "redirectUrl": {
+            "type": "string"
+          },
+          "accessTokenExpiration": {
+            "type": "number"
+          },
+          "refreshTokenExpiration": {
+            "type": "number"
+          },
+          "authCodeExpiration": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "clientId",
+          "clientSecret",
+          "secret",
+          "accessTokenExpiration",
+          "refreshTokenExpiration",
+          "authCodeExpiration"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<AuthClient, 'deleted' | 'deletedBy' | 'deletedOn' | 'createdOn' | 'createdBy' | 'modifiedOn' | 'modifiedBy' | 'createdBy'>"
       },
       "PingResponse": {
         "type": "object",
