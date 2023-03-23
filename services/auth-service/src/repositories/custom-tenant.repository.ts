@@ -45,7 +45,7 @@ export class CustomTenantRepository extends DefaultSoftCrudRepository<
 
   async createNewTenant(tenantDTO: Tenant) {
     tenantDTO.status = TenantStatus.ACTIVE;
-    console.log(tenantDTO);
+    await this.tenantRepo.create(tenantDTO);
   }
 
   async createNewTenantConfig(tenantConfigDTO: TenantConfig) {
