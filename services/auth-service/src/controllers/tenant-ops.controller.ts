@@ -4,6 +4,7 @@ import {Tenant, TenantConfig} from '@sourceloop/authentication-service';
 import {CONTENT_TYPE} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
+import {tenantConfigExclusion, tenantExclusion} from '../helpers';
 import {CustomTenantRepository} from '../repositories';
 
 export class TenantOpsController {
@@ -20,23 +21,13 @@ export class TenantOpsController {
       content: {
         [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Tenant, {
-            exclude: [
-              'deleted',
-              'deletedBy',
-              'deletedOn',
-              'createdOn',
-              'createdBy',
-              'modifiedOn',
-              'modifiedBy',
-              'createdBy',
-              'status',
-            ],
+            exclude: tenantExclusion,
           }),
         },
       },
     })
     model: Tenant,
-  ): Promise<void> {
+  ): Promise<Tenant> {
     return await this.customTenantRepo.createNewTenant(model);
   }
 
@@ -48,22 +39,13 @@ export class TenantOpsController {
       content: {
         [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(TenantConfig, {
-            exclude: [
-              'deleted',
-              'deletedBy',
-              'deletedOn',
-              'createdOn',
-              'createdBy',
-              'modifiedOn',
-              'modifiedBy',
-              'createdBy',
-            ],
+            exclude: tenantConfigExclusion,
           }),
         },
       },
     })
     model: TenantConfig,
-  ): Promise<void> {
+  ): Promise<TenantConfig> {
     return await this.customTenantRepo.createNewTenantConfig(model);
   }
 }

@@ -1565,7 +1565,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TenantExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy-status_"
+                "$ref": "#/components/schemas/TenantExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy_"
               }
             }
           }
@@ -2075,10 +2075,10 @@
         "additionalProperties": false,
         "x-typescript-type": "Omit<AuthClient, 'deleted' | 'deletedBy' | 'deletedOn' | 'createdOn' | 'createdBy' | 'modifiedOn' | 'modifiedBy' | 'createdBy'>"
       },
-      "TenantExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy-status_": {
-        "title": "TenantExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy-status_",
+      "TenantExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy_": {
+        "title": "TenantExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy_",
         "type": "object",
-        "description": "(tsType: Omit<Tenant, 'deleted' | 'deletedBy' | 'deletedOn' | 'createdOn' | 'createdBy' | 'modifiedOn' | 'modifiedBy' | 'createdBy' | 'status'>, schemaOptions: {\n  exclude: [\n    'deleted',    'deletedBy',\n    'deletedOn',  'createdOn',\n    'createdBy',  'modifiedOn',\n    'modifiedBy', 'createdBy',\n    'status'\n  ]\n})",
+        "description": "(tsType: Omit<Tenant, 'deleted' | 'deletedBy' | 'deletedOn' | 'createdOn' | 'createdBy' | 'modifiedOn' | 'modifiedBy' | 'createdBy'>, schemaOptions: { exclude: [ 'deleted', 'deletedBy', 'deletedOn', 'createdOn', 'createdBy', 'modifiedOn', 'modifiedBy', 'createdBy' ] })",
         "properties": {
           "id": {
             "type": "string"
@@ -2103,14 +2103,23 @@
           },
           "country": {
             "type": "string"
+          },
+          "status": {
+            "type": "number",
+            "description": "Tenant status - Active or Inactive",
+            "enum": [
+              1,
+              0
+            ]
           }
         },
         "required": [
           "name",
-          "key"
+          "key",
+          "status"
         ],
         "additionalProperties": false,
-        "x-typescript-type": "Omit<Tenant, 'deleted' | 'deletedBy' | 'deletedOn' | 'createdOn' | 'createdBy' | 'modifiedOn' | 'modifiedBy' | 'createdBy' | 'status'>"
+        "x-typescript-type": "Omit<Tenant, 'deleted' | 'deletedBy' | 'deletedOn' | 'createdOn' | 'createdBy' | 'modifiedOn' | 'modifiedBy' | 'createdBy'>"
       },
       "Tenant": {
         "title": "Tenant",
