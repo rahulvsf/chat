@@ -1,21 +1,26 @@
-import {Tenant, TenantConfig} from '@sourceloop/authentication-service';
+class Exclusions {
+  private readonly exclusions: string[] = [
+    'deleted',
+    'deletedBy',
+    'deletedOn',
+    'createdOn',
+    'createdBy',
+    'modifiedOn',
+    'modifiedBy',
+    'createdBy',
+  ];
 
-const exclusionArray = [
-  'deleted',
-  'deletedBy',
-  'deletedOn',
-  'createdOn',
-  'createdBy',
-  'modifiedOn',
-  'modifiedBy',
-  'createdBy',
-];
+  private static _instance: Exclusions;
 
-function genericExclusion<T>(): (keyof T)[] {
-  return exclusionArray as unknown as (keyof T)[];
+  public static get Instance() {
+    return this._instance || (this._instance = new this());
+  }
+
+  genericExclusion = <T>(): (keyof T)[] => {
+    return this.exclusions as (keyof T)[];
+  };
 }
 
-const tenantExclusion = genericExclusion<Tenant>();
-const tenantConfigExclusion = genericExclusion<TenantConfig>();
+const ExclusionsInstance = Exclusions.Instance;
 
-export {tenantExclusion, tenantConfigExclusion};
+export const genericExclusions = ExclusionsInstance.genericExclusion;

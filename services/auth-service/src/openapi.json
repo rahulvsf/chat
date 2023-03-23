@@ -1599,6 +1599,33 @@
         "operationId": "TenantOpsController.createTenantConfig"
       }
     },
+    "/user/{id}": {
+      "delete": {
+        "x-controller-name": "UserOperationsController",
+        "x-operation-name": "deleteUser",
+        "tags": [
+          "UserOperationsController"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Return value of UserOperationsController.deleteUser",
+            "content": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "number"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "UserOperationsController.deleteUser"
+      }
+    },
     "/": {
       "get": {
         "x-controller-name": "HomePageController",

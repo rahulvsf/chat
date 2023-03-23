@@ -1,4 +1,4 @@
-import {injectable, BindingScope} from '@loopback/core';
+import {BindingScope, injectable} from '@loopback/core';
 import {AnyObject, repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {
@@ -10,8 +10,9 @@ import {
   UserTenantRepository,
 } from '@sourceloop/authentication-service';
 import {AuthenticateErrorKeys, UserStatus} from '@sourceloop/core';
-import {UserDto} from '../models';
 import bcrypt from 'bcrypt';
+import {nanoid} from 'nanoid';
+import {UserDto} from '../models';
 const saltRounds = 10;
 
 @injectable({scope: BindingScope.TRANSIENT})
@@ -73,6 +74,7 @@ export class UserOperationsService {
     userDto.username = username.toLowerCase();
     const userSaved = await this.userRepository.createWithoutPassword(
       new User({
+        id: nanoid(),
         username: userDto.username,
         firstName: userDto.firstName,
         lastName: userDto.lastName,
@@ -98,6 +100,11 @@ export class UserOperationsService {
       tenantId: userTenantData.tenantId,
       userTenantId: userTenantData.id,
     });
+  }
+
+  async deleteUser(userId: string) {
+    const userFound = await this.userRepository.findById(userId);
+    await this.userRepository.delete(userFound);
   }
 
   // do a series of checks
@@ -136,6 +143,7 @@ export class UserOperationsService {
   ): Promise<UserTenant> {
     return this.userTenantRepository.create(
       {
+        id: nanoid(),
         roleId: userDto.roleId,
         status: userStatus,
         tenantId: userDto.tenantId,

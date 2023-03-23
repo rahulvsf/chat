@@ -4,7 +4,7 @@ import {Tenant, TenantConfig} from '@sourceloop/authentication-service';
 import {CONTENT_TYPE} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
-import {tenantConfigExclusion, tenantExclusion} from '../helpers';
+import {genericExclusions} from '../helpers';
 import {CustomTenantRepository} from '../repositories';
 
 export class TenantOpsController {
@@ -21,7 +21,7 @@ export class TenantOpsController {
       content: {
         [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(Tenant, {
-            exclude: tenantExclusion,
+            exclude: genericExclusions<Tenant>(),
           }),
         },
       },
@@ -39,7 +39,7 @@ export class TenantOpsController {
       content: {
         [CONTENT_TYPE.JSON]: {
           schema: getModelSchemaRef(TenantConfig, {
-            exclude: tenantConfigExclusion,
+            exclude: genericExclusions<TenantConfig>(),
           }),
         },
       },

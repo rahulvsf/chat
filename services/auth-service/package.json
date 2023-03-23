@@ -82,6 +82,7 @@
         "loopback-connector-postgresql": "^6.0.2",
         "loopback4-authentication": "^7.5.1",
         "loopback4-authorization": "^5.1.2",
+        "nanoid": "^3.3.4",
         "swagger-stats": "^0.99.5",
         "symlink-resolver": "0.2.1",
         "tslib": "^2.4.1"
