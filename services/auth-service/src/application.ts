@@ -1,9 +1,25 @@
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
+import {RepositoryMixin} from '@loopback/repository';
+import {RestApplication} from '@loopback/rest';
 import {
   RestExplorerBindings,
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
+import {ServiceMixin} from '@loopback/service-proxy';
+import {
+  AuthenticationServiceComponent,
+  SignUpBindings,
+} from '@sourceloop/authentication-service';
+import {
+  BearerVerifierBindings,
+  BearerVerifierComponent,
+  BearerVerifierConfig,
+  BearerVerifierType,
+  SECURITY_SCHEME_SPEC,
+  ServiceSequence,
+  SFCoreBindings,
+} from '@sourceloop/core';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
 import {AuthenticationComponent} from 'loopback4-authentication';
@@ -11,26 +27,11 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-import {
-  ServiceSequence,
-  SFCoreBindings,
-  BearerVerifierBindings,
-  BearerVerifierComponent,
-  BearerVerifierConfig,
-  BearerVerifierType,
-  SECURITY_SCHEME_SPEC,
-} from '@sourceloop/core';
-import {
-  AuthenticationServiceComponent,
-  SignUpBindings,
-} from '@sourceloop/authentication-service';
-import {RepositoryMixin} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
-import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import * as openapi from './openapi.json';
-import {LocalSignUpProvider} from './providers/local-signup.provider';
+import {GoogleSignUpProvider} from './providers/google-signup.provider';
 import {LocalSignUpTokenHandlerProvider} from './providers/local-signup-token-handler.provider';
+import {LocalSignUpProvider} from './providers/local-signup.provider';
 
 export {ApplicationConfig};
 
@@ -87,6 +88,9 @@ export class AuthServiceApplication extends BootMixin(
     );
     this.bind(SignUpBindings.SIGNUP_HANDLER_PROVIDER).toProvider(
       LocalSignUpTokenHandlerProvider,
+    );
+    this.bind(SignUpBindings.GOOGLE_SIGN_UP_PROVIDER).toProvider(
+      GoogleSignUpProvider,
     );
 
     // Add bearer verifier component
