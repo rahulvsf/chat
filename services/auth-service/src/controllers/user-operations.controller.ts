@@ -14,7 +14,7 @@ export class UserOperationsController {
   @authorize({permissions: ['*']})
   @del('/user/{id}')
   async deleteUser(
-    @param.path.number('id')
+    @param.path.string('id')
     id: string,
   ) {
     await this.userOps.deleteUser(id);

@@ -1618,7 +1618,7 @@
             "name": "id",
             "in": "path",
             "schema": {
-              "type": "number"
+              "type": "string"
             },
             "required": true
           }
