@@ -78,7 +78,7 @@ export class UserOperationsService {
         username: userDto.username,
         firstName: userDto.firstName,
         lastName: userDto.lastName,
-        email: userDto.lastName,
+        email: userDto.email,
         phone: userDto.phone,
         defaultTenantId: userDto.tenantId,
         authClientIds: `{${authClient.id}}`,
@@ -170,8 +170,10 @@ export class UserOperationsService {
     // else set password
     const password = await bcrypt.hash(newPassword, saltRounds);
     creds = new UserCredentials({
+      id: nanoid(),
       authProvider: 'internal',
       password,
+      userId: user.id,
     });
     await this.userRepository.credentials(user.id).create(creds);
     return true;
