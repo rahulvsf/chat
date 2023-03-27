@@ -6,7 +6,7 @@ const DEFAULT_DB_IDLE_TIMEOUT_MILLIS = 60000;
 const DEFAULT_DB_CONNECTION_TIMEOUT_MILLIS = 2000;
 
 const config = {
-  name: 'chat',
+  name: 'chatDb',
   connector: 'postgresql',
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
@@ -25,7 +25,7 @@ export class ChatDataSource
   extends juggler.DataSource
   implements LifeCycleObserver
 {
-  static dataSourceName = 'chat';
+  static dataSourceName = 'chatDb';
 
   static readonly defaultConfig = config;
 
