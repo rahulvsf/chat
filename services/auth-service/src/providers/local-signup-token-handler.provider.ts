@@ -8,6 +8,7 @@ export class LocalSignUpTokenHandlerProvider
     // Empty Constructor
   }
 
+  // this token handler fn does not return anything
   value(): ValueOrPromise<SignupTokenHandlerFn> {
     return async dto => {
       console.log(dto);

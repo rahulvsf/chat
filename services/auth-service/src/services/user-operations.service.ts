@@ -15,6 +15,8 @@ import {nanoid} from 'nanoid';
 import {UserDto} from '../models';
 const saltRounds = 10;
 
+// this class has ==> client, tenant and user validation
+// before a new user is created
 @injectable({scope: BindingScope.TRANSIENT})
 export class UserOperationsService {
   constructor(

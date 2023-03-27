@@ -11,7 +11,9 @@ export class LocalSignUpProvider
     private readonly userOperations: UserOperationsService,
   ) {}
 
+  // Local Sign Up
   value(): UserSignupFn<UserDto, UserDto> {
+    // creating a new user wth userOperations service
     return async model => this.userOperations.createUser(model, {});
   }
 }
