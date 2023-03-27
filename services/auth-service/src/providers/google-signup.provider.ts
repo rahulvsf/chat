@@ -12,8 +12,11 @@ export class GoogleSignUpProvider implements Provider<GoogleSignUpFn> {
   ) {}
 
   value(): ValueOrPromise<GoogleSignUpFn> {
+    // google sign up provider
     return async function googleSignup(profile) {
       console.log(profile);
+      // TODO: create a new user and add 'Google'
+      // as a provider
       return null;
     };
   }
