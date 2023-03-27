@@ -1,5 +1,5 @@
 class Exclusions {
-  private readonly exclusions: string[] = [
+  private exclusions: string[] = [
     'deleted',
     'deletedBy',
     'deletedOn',
@@ -16,7 +16,10 @@ class Exclusions {
     return this._instance || (this._instance = new this());
   }
 
-  genericExclusion = <T>(): (keyof T)[] => {
+  genericExclusion = <T>(additions?: string[]): (keyof T)[] => {
+    if (additions != undefined) {
+      this.exclusions = [...this.exclusions, ...additions];
+    }
     return this.exclusions as (keyof T)[];
   };
 }
