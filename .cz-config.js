@@ -25,6 +25,7 @@ module.exports = {
   ],
 
   scopes: [
+{name: 'entry-point-facade'}, 
 {name: 'chat-service-service'}, 
 {name: 'auth-service-service'}, 
     {name: 'ci-cd'},
