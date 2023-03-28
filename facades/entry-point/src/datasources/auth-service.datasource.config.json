@@ -1,0 +1,27 @@
+{
+    "name": "AuthService",
+    "connector": "rest",
+    "baseURL": "",
+    "crud": false,
+    "options": {
+        "baseUrl": "$AUTH_SERVICE_URL",
+        "headers": {
+            "accept": "application/json",
+            "content-type": "application/json"
+        }
+    },
+    "operations": [
+        {
+            "template": {
+                "method": "POST",
+                "url": "/auth/login",
+                "body": "{data}"
+            },
+            "functions": {
+                "loginUser": [
+                    "data"
+                ]
+            }
+        }
+    ]
+}

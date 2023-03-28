@@ -39,7 +39,7 @@ export class AuthServiceApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
 ) {
   constructor(options: ApplicationConfig = {}) {
-    const port = 3000;
+    const port = 3001;
     dotenv.config();
     dotenvExt.load({
       schema: '.env.example',
