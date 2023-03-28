@@ -6,5 +6,15 @@ export interface UserLogin {
 }
 
 export interface UserLoginSuccess {
-    code: string;
+  code: string;
+}
+
+export interface PostMessage {
+  body: string;
+  channelId: string;
+  channelType: string;
+  status: number;
+  subject: string;
+  toUserId: string;
+  parentMessageId?: string;
 }

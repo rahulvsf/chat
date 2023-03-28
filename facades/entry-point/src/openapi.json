@@ -36,6 +36,66 @@
         "operationId": "AuthController.loginUser"
       }
     },
+    "/messages": {
+      "post": {
+        "x-controller-name": "MessageController",
+        "x-operation-name": "postNewMessage",
+        "tags": [
+          "MessageController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {},
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateMessage   |\n",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "MessageController.postNewMessage"
+      },
+      "get": {
+        "x-controller-name": "MessageController",
+        "x-operation-name": "getMessages",
+        "tags": [
+          "MessageController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {},
+        "description": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "MessageController.getMessages"
+      }
+    },
     "/ping": {
       "get": {
         "x-controller-name": "PingController",

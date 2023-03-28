@@ -1,0 +1,45 @@
+{
+    "name": "MessageService",
+    "connector": "rest",
+    "baseURL": "",
+    "crud": false,
+    "options": {
+        "baseUrl": "$CHAT_SERVICE_URL",
+        "headers": {
+            "accept": "application/json",
+            "content-type": "application/json"
+        }
+    },
+    "operations": [
+        {
+            "template": {
+                "method": "POST",
+                "url": "/messages",
+                "headers": {
+                    "Authorization": "{token}"
+                },
+                "body": "{data}"
+            },
+            "functions": {
+                "postMessage": [
+                    "token",
+                    "data"
+                ]
+            }
+        },
+        {
+            "template": {
+                "method": "GET",
+                "url": "/messages",
+                "headers": {
+                    "Authorization": "{token}"
+                }
+            },
+            "functions": {
+                "getMessage": [
+                    "token"
+                ]
+            }
+        }
+    ]
+}
