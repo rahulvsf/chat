@@ -5,6 +5,7 @@ import {
   AuthClientRepository,
   User,
   UserCredentials,
+  UserLevelPermissionRepository,
   UserRepository,
   UserTenant,
   UserTenantRepository,
@@ -26,6 +27,8 @@ export class UserOperationsService {
     private readonly userRepository: UserRepository,
     @repository(AuthClientRepository)
     private readonly authClientRepository: AuthClientRepository,
+    @repository(UserLevelPermissionRepository)
+    private readonly userLevelPermissionRepo: UserLevelPermissionRepository,
   ) {}
 
   async createUser(userDto: UserDto, options: AnyObject) {
@@ -63,6 +66,7 @@ export class UserOperationsService {
           userExists?.id,
           options,
         );
+        await this.createUserPermissions(userTenant.id);
         return new UserDto({
           roleId: userTenant.roleId,
           status: userTenant.status,
@@ -93,6 +97,8 @@ export class UserOperationsService {
       userSaved.id,
       options,
     );
+
+    await this.createUserPermissions(userTenantData.id);
 
     await this.setPassword(userDto.email, userDto.password);
 
@@ -179,5 +185,19 @@ export class UserOperationsService {
     });
     await this.userRepository.credentials(user.id).create(creds);
     return true;
+  }
+
+  async createUserPermissions(userTenantId?: string) {
+    const userPermissionObject = {
+      id: nanoid(),
+      userTenantId,
+      permission: '',
+      allowed: true,
+    };
+    userPermissionObject.permission = 'ViewMessage';
+    await this.userLevelPermissionRepo.create(userPermissionObject);
+    userPermissionObject.id = nanoid();
+    userPermissionObject.permission = 'CreateMessage';
+    await this.userLevelPermissionRepo.create(userPermissionObject);
   }
 }
