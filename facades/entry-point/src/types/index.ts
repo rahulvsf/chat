@@ -9,6 +9,17 @@ export interface UserLoginSuccess {
   code: string;
 }
 
+export interface TokenLogin {
+  code: string;
+  clientId: string;
+}
+
+export interface TokenSuccess {
+  accessToken: string;
+  refreshToken: string;
+  expires: number
+}
+
 export interface PostMessage {
   body: string;
   channelId: string;

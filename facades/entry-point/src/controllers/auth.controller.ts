@@ -2,7 +2,7 @@ import {inject} from '@loopback/core';
 import {post, requestBody} from '@loopback/openapi-v3';
 import {authorize} from 'loopback4-authorization';
 import {AuthAccessor} from '../services';
-import {UserLogin, UserLoginSuccess} from '../types';
+import {TokenSuccess, UserLogin, UserLoginSuccess} from '../types';
 
 export class AuthController {
   constructor(
@@ -15,7 +15,11 @@ export class AuthController {
   async loginUser(
     @requestBody()
     model: UserLogin,
-  ): Promise<UserLoginSuccess> {
-    return await this.authService.loginUser(model);
+  ): Promise<TokenSuccess> {
+    const result: UserLoginSuccess = await this.authService.loginUser(model);
+    return await this.authService.getTokens({
+      code: result.code,
+      clientId: model.client_id,
+    });
   }
 }

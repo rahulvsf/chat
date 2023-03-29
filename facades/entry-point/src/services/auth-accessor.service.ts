@@ -1,10 +1,11 @@
 import {inject, Provider} from '@loopback/core';
 import {getService} from '@loopback/service-proxy';
 import {AuthServiceDataSource} from '../datasources';
-import { UserLogin, UserLoginSuccess } from '../types';
+import { TokenLogin, TokenSuccess, UserLogin, UserLoginSuccess } from '../types';
 
 export interface AuthAccessor {
   loginUser(data: UserLogin): Promise<UserLoginSuccess>;
+  getTokens(data: TokenLogin): Promise<TokenSuccess>;
 }
 
 export class AuthAccessorProvider implements Provider<AuthAccessor> {
