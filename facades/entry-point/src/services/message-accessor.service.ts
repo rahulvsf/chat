@@ -6,6 +6,7 @@ import {PostMessage} from '../types';
 export interface MessageAccessor {
   postMessage(token: string, data: PostMessage): Promise<Object>;
   getMessage(token: string): Promise<Object>;
+  deleteMessage(token: string, id: string): Promise<void>;
 }
 
 export class MessageAccessorProvider implements Provider<MessageAccessor> {

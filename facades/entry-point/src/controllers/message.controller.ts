@@ -1,6 +1,6 @@
 import {inject} from '@loopback/context';
-import {get, param, post, requestBody} from '@loopback/openapi-v3';
-import { HttpErrors } from '@loopback/rest';
+import {del, get, param, post, requestBody} from '@loopback/openapi-v3';
+import {HttpErrors} from '@loopback/rest';
 import {OPERATION_SECURITY_SPEC} from '@sourceloop/core';
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
@@ -22,7 +22,7 @@ export class MessageController {
   })
   async postNewMessage(
     @param.header.string('Authorization') token: string,
-    @requestBody() model: PostMessage,  
+    @requestBody() model: PostMessage,
   ): Promise<Object> {
     return await this.messageService.postMessage(token, model);
   }
@@ -42,5 +42,18 @@ export class MessageController {
       console.log(error);
       throw HttpErrors[500];
     }
+  }
+
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: [Permissions.DeleteMessage]})
+  @del('/messages/{id}', {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {},
+  })
+  async deleteAMessage(
+    @param.header.string('Authorization') token: string,
+    @param.query.string('id') id: string,
+  ) {
+    return await this.messageService.deleteMessage(token, id);
   }
 }

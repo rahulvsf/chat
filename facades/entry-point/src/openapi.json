@@ -36,6 +36,39 @@
         "operationId": "AuthController.loginUser"
       }
     },
+    "/messages/{id}": {
+      "delete": {
+        "x-controller-name": "MessageController",
+        "x-operation-name": "deleteAMessage",
+        "tags": [
+          "MessageController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {},
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteMessage   |\n",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "MessageController.deleteAMessage"
+      }
+    },
     "/messages": {
       "post": {
         "x-controller-name": "MessageController",

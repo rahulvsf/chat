@@ -40,6 +40,21 @@
                     "token"
                 ]
             }
+        },
+        {
+            "template": {
+                "method": "DELETE",
+                "headers": {
+                    "Authorization": "{token}"
+                },
+                "url": "/messages/{id}"
+            },
+            "functions": {
+                "deleteMessage": [
+                    "token",
+                    "id"
+                ]
+            }
         }
     ]
 }
