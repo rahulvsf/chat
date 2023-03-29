@@ -22,13 +22,13 @@ export class MessageController {
   })
   async postNewMessage(
     @param.header.string('Authorization') token: string,
-    @requestBody() model: PostMessage,
+    @requestBody() model: PostMessage,  
   ): Promise<Object> {
     return await this.messageService.postMessage(token, model);
   }
 
   @authenticate(STRATEGY.BEARER)
-  @authorize({permissions: ['*']})
+  @authorize({permissions: [Permissions.ViewMessage]})
   @get('/messages', {
     security: OPERATION_SECURITY_SPEC,
     responses: {},

@@ -83,7 +83,7 @@
           }
         ],
         "responses": {},
-        "description": "",
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewMessage   |\n",
         "parameters": [
           {
             "name": "Authorization",
