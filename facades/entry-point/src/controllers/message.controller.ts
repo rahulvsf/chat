@@ -8,7 +8,6 @@ import {
   requestBody,
 } from '@loopback/openapi-v3';
 import {Filter} from '@loopback/repository';
-import {HttpErrors} from '@loopback/rest';
 import {
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
