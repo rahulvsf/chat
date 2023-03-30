@@ -49,11 +49,15 @@
                 "url": "/messages",
                 "headers": {
                     "Authorization": "{token}"
+                },
+                "query": {
+                    "filter": "{filter}"
                 }
             },
             "functions": {
                 "getMessage": [
-                    "token"
+                    "token",
+                    "filter"
                 ]
             }
         },

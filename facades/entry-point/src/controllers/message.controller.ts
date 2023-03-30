@@ -7,6 +7,7 @@ import {
   post,
   requestBody,
 } from '@loopback/openapi-v3';
+import {Filter} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {
   CONTENT_TYPE,
@@ -71,13 +72,16 @@ export class MessageController {
   })
   async getMessages(
     @param.header.string('Authorization') token: string,
-  ): Promise<Object> {
-    try {
-      return await this.messageService.getMessage(token);
-    } catch (error) {
-      console.log(error);
-      throw HttpErrors[500];
-    }
+    @param.query.string('ChannelId') channelId: string,
+  ) {
+    const filter: Filter<Message> = {
+      where: {
+        channelId,
+      },
+      fields: ['body', 'id', 'toUserId', 'channelId'],
+      order: ['createdOn DESC'],
+    };
+    return await this.messageService.getMessage(token, filter);
   }
 
   @authenticate(STRATEGY.BEARER)

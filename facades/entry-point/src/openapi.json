@@ -134,6 +134,13 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "ChannelId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "operationId": "MessageController.getMessages"

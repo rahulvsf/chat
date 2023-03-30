@@ -3,4 +3,6 @@ export enum Permissions {
   CreateMessage = 'CreateMessage',
   UpdateMessage = 'UpdateMessage',
   DeleteMessage = 'DeleteMessage',
+
+  CreateMessageRecipient="CreateMessageRecipient"
 }
