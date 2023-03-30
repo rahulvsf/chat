@@ -75,6 +75,27 @@
                     "id"
                 ]
             }
+        },
+        {
+            "template": {
+                "method": "PATCH",
+                "headers": {
+                    "Authorization": "{token}"
+                },
+                "url": "/messages/{id}/message-recipients",
+                "body": "{data}",
+                "query": {
+                    "where": "{where}"
+                }
+            },
+            "functions": {
+                "updateMessageRecipients": [
+                    "token",
+                    "id",
+                    "data",
+                    "where"
+                ]
+            }
         }
     ]
 }

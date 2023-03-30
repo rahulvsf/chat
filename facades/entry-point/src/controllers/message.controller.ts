@@ -3,11 +3,13 @@ import {
   del,
   get,
   getModelSchemaRef,
+  getWhereSchemaFor,
   param,
+  patch,
   post,
   requestBody,
 } from '@loopback/openapi-v3';
-import {Filter} from '@loopback/repository';
+import {Filter, Where} from '@loopback/repository';
 import {
   CONTENT_TYPE,
   OPERATION_SECURITY_SPEC,
@@ -16,7 +18,7 @@ import {
 import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Permissions} from '../enums';
-import {Message} from '../models';
+import {Message, MessageRecipient} from '../models';
 import {MessageAccessor} from '../services';
 
 export class MessageController {
@@ -54,13 +56,40 @@ export class MessageController {
     model: Message,
   ) {
     const postedMessage = await this.messageService.postMessage(token, model);
-    const messageRecipient = {
+    const messageRecipient = new MessageRecipient({
       channelId: model.channelId,
       recipientId: model.toUserId,
       messageId: postedMessage.id,
-    };
+    });
     await this.messageService.postMessageRecipients(token, messageRecipient);
     return postedMessage;
+  }
+
+  @authenticate(STRATEGY.BEARER)
+  @authorize({permissions: ['*']})
+  @patch(`messages/{messageid}/read`, {
+    security: OPERATION_SECURITY_SPEC,
+    responses: {
+      [STATUS_CODE.OK]: {
+        description: 'Message PATCH success',
+      },
+    },
+  })
+  async patchMessageRecipients(
+    @param.header.string('Authorization') token: string,
+    @param.path.string('messageid') msgId: string,
+    @param.query.object('where', getWhereSchemaFor(MessageRecipient))
+    where?: Where<MessageRecipient>,
+  ): Promise<MessageRecipient> {
+    const patched = {
+      isRead: true,
+    };
+    return this.messageService.updateMessageRecipients(
+      token,
+      msgId,
+      patched,
+      where,
+    );
   }
 
   @authenticate(STRATEGY.BEARER)

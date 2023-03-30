@@ -36,6 +36,58 @@
         "operationId": "AuthController.loginUser"
       }
     },
+    "/messages/{messageid}/read": {
+      "patch": {
+        "x-controller-name": "MessageController",
+        "x-operation-name": "patchMessageRecipients",
+        "tags": [
+          "MessageController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message PATCH success"
+          }
+        },
+        "description": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "messageid",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "MessageRecipient.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<MessageRecipient>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "MessageController.patchMessageRecipients"
+      }
+    },
     "/messages/{id}": {
       "delete": {
         "x-controller-name": "MessageController",
