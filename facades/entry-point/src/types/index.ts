@@ -19,13 +19,3 @@ export interface TokenSuccess {
   refreshToken: string;
   expires: number
 }
-
-export interface PostMessage {
-  body: string;
-  channelId: string;
-  channelType: string;
-  status: number;
-  subject: string;
-  toUserId: string;
-  parentMessageId?: string;
-}

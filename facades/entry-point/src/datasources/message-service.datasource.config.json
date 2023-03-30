@@ -29,6 +29,22 @@
         },
         {
             "template": {
+                "method": "POST",
+                "url": "/message-recipients",
+                "headers": {
+                    "Authorization": "{token}"
+                },
+                "body": "{data}"
+            },
+            "functions": {
+                "postMessageRecipients": [
+                    "token",
+                    "data"
+                ]
+            }
+        },
+        {
+            "template": {
                 "method": "GET",
                 "url": "/messages",
                 "headers": {

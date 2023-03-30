@@ -81,7 +81,17 @@
             "HTTPBearer": []
           }
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        },
         "description": "\n\n| Permissions |\n| ------- |\n| CreateMessage   |\n",
         "parameters": [
           {
@@ -96,7 +106,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object"
+                "$ref": "#/components/schemas/Message"
               }
             }
           },
@@ -185,6 +195,37 @@
       }
     },
     "schemas": {
+      "Message": {
+        "title": "Message",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "toUserId": {
+            "type": "string"
+          },
+          "channelId": {
+            "type": "string"
+          },
+          "channelType": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "body",
+          "toUserId",
+          "channelId",
+          "channelType"
+        ],
+        "additionalProperties": false
+      },
       "PingResponse": {
         "type": "object",
         "title": "PingResponse",

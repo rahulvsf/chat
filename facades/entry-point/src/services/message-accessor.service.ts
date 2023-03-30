@@ -1,10 +1,12 @@
 import {inject, Provider} from '@loopback/core';
+import { AnyObject } from '@loopback/repository';
 import {getService} from '@loopback/service-proxy';
 import {MessageServiceDataSource} from '../datasources';
-import {PostMessage} from '../types';
+import { Message } from '../models';
 
 export interface MessageAccessor {
-  postMessage(token: string, data: PostMessage): Promise<Object>;
+  postMessage(token: string, data: Message): Promise<Message>;
+  postMessageRecipients(token: string, data: AnyObject): Promise<AnyObject>;
   getMessage(token: string): Promise<Object>;
   deleteMessage(token: string, id: string): Promise<void>;
 }
