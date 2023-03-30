@@ -33,7 +33,7 @@ export class NotifServiceApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
 ) {
   constructor(options: ApplicationConfig = {}) {
-    const port = 3000;
+    const port = 3003;
     dotenv.config();
     dotenvExt.load({
       schema: '.env.example',

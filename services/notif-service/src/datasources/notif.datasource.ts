@@ -7,7 +7,7 @@ const DEFAULT_DB_IDLE_TIMEOUT_MILLIS = 60000;
 const DEFAULT_DB_CONNECTION_TIMEOUT_MILLIS = 2000;
 
 const config = {
-  name: 'notif',
+  name: 'notifDb',
   connector: 'postgresql',
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
