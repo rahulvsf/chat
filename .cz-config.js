@@ -25,6 +25,7 @@ module.exports = {
   ],
 
   scopes: [
+{name: 'notif-service-service'}, 
 {name: 'entry-point-facade'}, 
 {name: 'chat-service-service'}, 
 {name: 'auth-service-service'}, 
