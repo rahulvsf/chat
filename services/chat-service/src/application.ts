@@ -33,7 +33,7 @@ export class ChatServiceApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
 ) {
   constructor(options: ApplicationConfig = {}) {
-    const port = 3000;
+    const port = 3002;
     dotenv.config();
     dotenvExt.load({
       schema: '.env.example',

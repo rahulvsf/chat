@@ -1524,6 +1524,43 @@
         "operationId": "LogoutController.logout"
       }
     },
+    "/permission/{id}": {
+      "patch": {
+        "x-controller-name": "UserOperationsController",
+        "x-operation-name": "addPermission",
+        "tags": [
+          "UserOperationsController"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Return value of UserOperationsController.addPermission",
+            "content": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "UserOperationsController.addPermission"
+      }
+    },
     "/ping": {
       "get": {
         "x-controller-name": "PingController",

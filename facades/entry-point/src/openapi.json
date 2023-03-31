@@ -1,0 +1,319 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "entry-point",
+    "version": "1.0.0",
+    "description": "entry-point",
+    "contact": {
+      "name": "Rahul Vijay",
+      "email": "rahul.vijay@sourcefuse.com"
+    }
+  },
+  "paths": {
+    "/login": {
+      "post": {
+        "x-controller-name": "AuthController",
+        "x-operation-name": "loginUser",
+        "tags": [
+          "AuthController"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Return value of AuthController.loginUser",
+            "content": {}
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operationId": "AuthController.loginUser"
+      }
+    },
+    "/messages/{messageid}/read": {
+      "patch": {
+        "x-controller-name": "MessageController",
+        "x-operation-name": "patchMessageRecipients",
+        "tags": [
+          "MessageController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message PATCH success"
+          }
+        },
+        "description": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "messageid",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "MessageRecipient.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<MessageRecipient>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "MessageController.patchMessageRecipients"
+      }
+    },
+    "/messages/{id}": {
+      "delete": {
+        "x-controller-name": "MessageController",
+        "x-operation-name": "deleteAMessage",
+        "tags": [
+          "MessageController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {},
+        "description": "\n\n| Permissions |\n| ------- |\n| DeleteMessage   |\n",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "MessageController.deleteAMessage"
+      }
+    },
+    "/messages": {
+      "post": {
+        "x-controller-name": "MessageController",
+        "x-operation-name": "postNewMessage",
+        "tags": [
+          "MessageController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n| Permissions |\n| ------- |\n| CreateMessage   |\n",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Message"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "MessageController.postNewMessage"
+      },
+      "get": {
+        "x-controller-name": "MessageController",
+        "x-operation-name": "getMessages",
+        "tags": [
+          "MessageController"
+        ],
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {},
+        "description": "\n\n| Permissions |\n| ------- |\n| ViewMessage   |\n",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ChannelId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "MessageController.getMessages"
+      }
+    },
+    "/ping": {
+      "get": {
+        "x-controller-name": "PingController",
+        "x-operation-name": "ping",
+        "tags": [
+          "PingController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ping Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PingResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "operationId": "PingController.ping"
+      }
+    },
+    "/": {
+      "get": {
+        "x-controller-name": "HomePageController",
+        "x-operation-name": "homePage",
+        "tags": [
+          "HomePageController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Home Page",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "description": "",
+        "operationId": "HomePageController.homePage"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Message": {
+        "title": "Message",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "toUserId": {
+            "type": "string"
+          },
+          "channelId": {
+            "type": "string"
+          },
+          "channelType": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "body",
+          "toUserId",
+          "channelId",
+          "channelType"
+        ],
+        "additionalProperties": false
+      },
+      "PingResponse": {
+        "type": "object",
+        "title": "PingResponse",
+        "properties": {
+          "greeting": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "headers": {
+            "type": "object",
+            "properties": {
+              "Content-Type": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ]
+}
