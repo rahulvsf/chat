@@ -26,6 +26,8 @@ import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import * as openapi from './openapi.json';
+import { PubnubBindings, PubNubProvider } from 'loopback4-notifications/pubnub';
+import { NotificationBindings } from 'loopback4-notifications';
 
 export {ApplicationConfig};
 
@@ -76,6 +78,16 @@ export class NotifServiceApplication extends BootMixin(
     this.component(AuthenticationComponent);
 
     this.component(NotificationServiceComponent);
+    this.bind(PubnubBindings.Config).to({
+      subscribeKey: process.env.PUBNUB_SUBSCRIBE_KEY,
+      publishKey: process.env.PUBNUB_PUBLISH_KEY,
+      secretKey: process.env.PUBNUB_SECRET_KEY,
+      ssl: true,
+      logVerbosity: true,
+      uuid: 'chat-app',
+      cipherKey: process.env.PUBNUB_CIPHER_KEY,
+    });
+    this.bind(NotificationBindings.PushProvider).toProvider(PubNubProvider);
 
     // Add bearer verifier component
     this.bind(BearerVerifierBindings.Config).to({
