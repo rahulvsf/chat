@@ -79,7 +79,7 @@ export class NotifServiceApplication extends BootMixin(
 
     this.component(NotificationServiceComponent);
     this.bind(PubnubBindings.Config).to({
-      subscribeKey: process.env.PUBNUB_SUBSCRIBE_KEY,
+      subscribeKey: process.env.PUBNUB_SUBSCRIBE_KEY!,
       publishKey: process.env.PUBNUB_PUBLISH_KEY,
       secretKey: process.env.PUBNUB_SECRET_KEY,
       ssl: true,

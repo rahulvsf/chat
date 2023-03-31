@@ -74,6 +74,7 @@
         "@opentelemetry/tracing": "^0.24.0",
         "@sourceloop/core": "^7.4.0",
         "@sourceloop/notification-service": "^6.2.15",
+        "@types/pubnub": "^7.2.1",
         "dotenv": "^16.0.3",
         "dotenv-extended": "^2.9.0",
         "loopback-connector-kv-redis": "^3.0.3",
