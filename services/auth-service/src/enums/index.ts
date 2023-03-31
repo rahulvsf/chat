@@ -5,5 +5,12 @@ export enum Permissions {
   DeleteMessage = 'DeleteMessage',
 
   CreateMessageRecipient="CreateMessageRecipient",
-  UpdateMessageRecipient="UpdateMessageRecipient"
+  UpdateMessageRecipient="UpdateMessageRecipient",
+
+  // Notifications
+  ViewNotification = 'ViewNotification',
+  CreateNotification = 'CreateNotification',
+  UpdateNotification = 'UpdateNotification',
+  DeleteNotification = 'DeleteNotification',
+  CanGetNotificationAccess = 'CanGetNotificationAccess',
 }
