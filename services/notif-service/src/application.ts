@@ -1,25 +1,9 @@
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
-import {RepositoryMixin} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
 import {
   RestExplorerBindings,
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
-import {ServiceMixin} from '@loopback/service-proxy';
-import {
-  AuthenticationServiceComponent,
-  SignUpBindings,
-} from '@sourceloop/authentication-service';
-import {
-  BearerVerifierBindings,
-  BearerVerifierComponent,
-  BearerVerifierConfig,
-  BearerVerifierType,
-  SECURITY_SCHEME_SPEC,
-  ServiceSequence,
-  SFCoreBindings,
-} from '@sourceloop/core';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
 import {AuthenticationComponent} from 'loopback4-authentication';
@@ -27,19 +11,31 @@ import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
+import {
+  ServiceSequence,
+  SFCoreBindings,
+  BearerVerifierBindings,
+  BearerVerifierComponent,
+  BearerVerifierConfig,
+  BearerVerifierType,
+  SECURITY_SCHEME_SPEC,
+} from '@sourceloop/core';
+import {NotificationServiceComponent} from '@sourceloop/notification-service';
+import {RepositoryMixin} from '@loopback/repository';
+import {RestApplication} from '@loopback/rest';
+import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import * as openapi from './openapi.json';
-import {GoogleSignUpProvider} from './providers/google-signup.provider';
-import {LocalSignUpTokenHandlerProvider} from './providers/local-signup-token-handler.provider';
-import {LocalSignUpProvider} from './providers/local-signup.provider';
+import { PubnubBindings, PubNubProvider } from 'loopback4-notifications/pubnub';
+import { NotificationBindings } from 'loopback4-notifications';
 
 export {ApplicationConfig};
 
-export class AuthServiceApplication extends BootMixin(
+export class NotifServiceApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
 ) {
   constructor(options: ApplicationConfig = {}) {
-    const port = 3001;
+    const port = 3003;
     dotenv.config();
     dotenvExt.load({
       schema: '.env.example',
@@ -81,17 +77,17 @@ export class AuthServiceApplication extends BootMixin(
     // Add authentication component
     this.component(AuthenticationComponent);
 
-    this.component(AuthenticationServiceComponent);
-
-    this.bind(SignUpBindings.LOCAL_SIGNUP_PROVIDER).toProvider(
-      LocalSignUpProvider,
-    );
-    this.bind(SignUpBindings.SIGNUP_HANDLER_PROVIDER).toProvider(
-      LocalSignUpTokenHandlerProvider,
-    );
-    this.bind(SignUpBindings.GOOGLE_SIGN_UP_PROVIDER).toProvider(
-      GoogleSignUpProvider,
-    );
+    this.component(NotificationServiceComponent);
+    this.bind(PubnubBindings.Config).to({
+      subscribeKey: process.env.PUBNUB_SUBSCRIBE_KEY,
+      publishKey: process.env.PUBNUB_PUBLISH_KEY,
+      secretKey: process.env.PUBNUB_SECRET_KEY,
+      ssl: true,
+      logVerbosity: true,
+      uuid: 'chat-app',
+      cipherKey: process.env.PUBNUB_CIPHER_KEY,
+    });
+    this.bind(NotificationBindings.PushProvider).toProvider(PubNubProvider);
 
     // Add bearer verifier component
     this.bind(BearerVerifierBindings.Config).to({
@@ -128,7 +124,7 @@ export class AuthServiceApplication extends BootMixin(
     this.api({
       openapi: '3.0.0',
       info: {
-        title: 'auth-service',
+        title: 'notif-service',
         version: '1.0.0',
       },
       paths: {},

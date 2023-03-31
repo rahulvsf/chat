@@ -1,0 +1,13 @@
+{
+    "name": "NotificationService",
+    "connector": "rest",
+    "baseURL": "",
+    "crud": false,
+    "options": {
+        "baseUrl": "$NOTIFICATION_SERVICE_URL",
+        "headers": {
+            "accept": "application/json",
+            "content-type": "application/json"
+        }
+    }
+}

@@ -1,0 +1,101 @@
+{
+    "name": "MessageService",
+    "connector": "rest",
+    "baseURL": "",
+    "crud": false,
+    "options": {
+        "baseUrl": "$CHAT_SERVICE_URL",
+        "headers": {
+            "accept": "application/json",
+            "content-type": "application/json"
+        }
+    },
+    "operations": [
+        {
+            "template": {
+                "method": "POST",
+                "url": "/messages",
+                "headers": {
+                    "Authorization": "{token}"
+                },
+                "body": "{data}"
+            },
+            "functions": {
+                "postMessage": [
+                    "token",
+                    "data"
+                ]
+            }
+        },
+        {
+            "template": {
+                "method": "POST",
+                "url": "/message-recipients",
+                "headers": {
+                    "Authorization": "{token}"
+                },
+                "body": "{data}"
+            },
+            "functions": {
+                "postMessageRecipients": [
+                    "token",
+                    "data"
+                ]
+            }
+        },
+        {
+            "template": {
+                "method": "GET",
+                "url": "/messages",
+                "headers": {
+                    "Authorization": "{token}"
+                },
+                "query": {
+                    "filter": "{filter}"
+                }
+            },
+            "functions": {
+                "getMessage": [
+                    "token",
+                    "filter"
+                ]
+            }
+        },
+        {
+            "template": {
+                "method": "DELETE",
+                "headers": {
+                    "Authorization": "{token}"
+                },
+                "url": "/messages/{id}"
+            },
+            "functions": {
+                "deleteMessage": [
+                    "token",
+                    "id"
+                ]
+            }
+        },
+        {
+            "template": {
+                "method": "PATCH",
+                "headers": {
+                    "Authorization": "{token}"
+                },
+                "url": "/messages/{id}/message-recipients",
+                "body": "{data}",
+                "query": {
+                    "where": "{where}"
+                }
+            },
+            "functions": {
+                "updateMessageRecipients": [
+                    "token",
+                    "id",
+                    "data",
+                    "where"
+                ]
+            }
+        }
+    ]
+}

@@ -12,7 +12,10 @@
         "db:migrate-reset:auth-service": "./node_modules/.bin/db-migrate reset --config 'auth-service/database.json' -m 'auth-service/migrations'",
         "db:migrate:chat-service": "./node_modules/.bin/db-migrate up --config 'chat-service/database.json' -m 'chat-service/migrations'",
         "db:migrate-down:chat-service": "./node_modules/.bin/db-migrate down --config 'chat-service/database.json' -m 'chat-service/migrations'",
-        "db:migrate-reset:chat-service": "./node_modules/.bin/db-migrate reset --config 'chat-service/database.json' -m 'chat-service/migrations'"
+        "db:migrate-reset:chat-service": "./node_modules/.bin/db-migrate reset --config 'chat-service/database.json' -m 'chat-service/migrations'",
+        "db:migrate:notif-service": "./node_modules/.bin/db-migrate up --config 'notif-service/database.json' -m 'notif-service/migrations'",
+        "db:migrate-down:notif-service": "./node_modules/.bin/db-migrate down --config 'notif-service/database.json' -m 'notif-service/migrations'",
+        "db:migrate-reset:notif-service": "./node_modules/.bin/db-migrate reset --config 'notif-service/database.json' -m 'notif-service/migrations'"
     },
     "author": "",
     "license": "ISC",
