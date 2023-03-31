@@ -1547,6 +1547,32 @@
         "operationId": "PingController.ping"
       }
     },
+    "/role": {
+      "post": {
+        "x-controller-name": "RoleController",
+        "x-operation-name": "createANewRole",
+        "tags": [
+          "RoleController"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Return value of RoleController.createANewRole",
+            "content": {}
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy-id_"
+              }
+            }
+          }
+        },
+        "operationId": "RoleController.createANewRole"
+      }
+    },
     "/tenant": {
       "post": {
         "x-controller-name": "TenantOpsController",
@@ -1565,7 +1591,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TenantExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy_"
+                "$ref": "#/components/schemas/TenantExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy-id_"
               }
             }
           }
@@ -1591,7 +1617,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TenantConfigExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy_"
+                "$ref": "#/components/schemas/TenantConfigExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy-id_"
               }
             }
           }
@@ -2102,14 +2128,92 @@
         "additionalProperties": false,
         "x-typescript-type": "Omit<AuthClient, 'deleted' | 'deletedBy' | 'deletedOn' | 'createdOn' | 'createdBy' | 'modifiedOn' | 'modifiedBy' | 'createdBy'>"
       },
-      "TenantExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy_": {
-        "title": "TenantExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy_",
+      "RoleExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy-id_": {
+        "title": "RoleExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy-id_",
         "type": "object",
-        "description": "(tsType: Omit<Tenant, 'deleted' | 'deletedBy' | 'deletedOn' | 'createdOn' | 'createdBy' | 'modifiedOn' | 'modifiedBy' | 'createdBy'>, schemaOptions: { exclude: [ 'deleted', 'deletedBy', 'deletedOn', 'createdOn', 'createdBy', 'modifiedOn', 'modifiedBy', 'createdBy' ] })",
+        "description": "(tsType: Omit<Role, 'deleted' | 'deletedBy' | 'deletedOn' | 'createdOn' | 'createdBy' | 'modifiedOn' | 'modifiedBy' | 'createdBy' | 'id'>, schemaOptions: {\n  exclude: [\n    'deleted',    'deletedBy',\n    'deletedOn',  'createdOn',\n    'createdBy',  'modifiedOn',\n    'modifiedBy', 'createdBy',\n    'id'\n  ]\n})",
         "properties": {
+          "name": {
+            "type": "string"
+          },
+          "roleType": {
+            "type": "number",
+            "maximum": 15,
+            "minimum": 0
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "roleType"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<Role, 'deleted' | 'deletedBy' | 'deletedOn' | 'createdOn' | 'createdBy' | 'modifiedOn' | 'modifiedBy' | 'createdBy' | 'id'>"
+      },
+      "Role": {
+        "title": "Role",
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
           "id": {
             "type": "string"
           },
+          "name": {
+            "type": "string"
+          },
+          "roleType": {
+            "type": "number",
+            "maximum": 15,
+            "minimum": 0
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "roleType"
+        ],
+        "additionalProperties": false
+      },
+      "TenantExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy-id_": {
+        "title": "TenantExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy-id_",
+        "type": "object",
+        "description": "(tsType: Omit<Tenant, 'deleted' | 'deletedBy' | 'deletedOn' | 'createdOn' | 'createdBy' | 'modifiedOn' | 'modifiedBy' | 'createdBy' | 'id'>, schemaOptions: {\n  exclude: [\n    'deleted',    'deletedBy',\n    'deletedOn',  'createdOn',\n    'createdBy',  'modifiedOn',\n    'modifiedBy', 'createdBy',\n    'id'\n  ]\n})",
+        "properties": {
           "name": {
             "type": "string"
           },
@@ -2146,7 +2250,7 @@
           "status"
         ],
         "additionalProperties": false,
-        "x-typescript-type": "Omit<Tenant, 'deleted' | 'deletedBy' | 'deletedOn' | 'createdOn' | 'createdBy' | 'modifiedOn' | 'modifiedBy' | 'createdBy'>"
+        "x-typescript-type": "Omit<Tenant, 'deleted' | 'deletedBy' | 'deletedOn' | 'createdOn' | 'createdBy' | 'modifiedOn' | 'modifiedBy' | 'createdBy' | 'id'>"
       },
       "Tenant": {
         "title": "Tenant",
@@ -2218,14 +2322,11 @@
         ],
         "additionalProperties": false
       },
-      "TenantConfigExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy_": {
-        "title": "TenantConfigExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy_",
+      "TenantConfigExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy-id_": {
+        "title": "TenantConfigExcluding_deleted-deletedBy-deletedOn-createdOn-createdBy-modifiedOn-modifiedBy-createdBy-id_",
         "type": "object",
-        "description": "(tsType: Omit<TenantConfig, 'deleted' | 'deletedBy' | 'deletedOn' | 'createdOn' | 'createdBy' | 'modifiedOn' | 'modifiedBy' | 'createdBy'>, schemaOptions: { exclude: [ 'deleted', 'deletedBy', 'deletedOn', 'createdOn', 'createdBy', 'modifiedOn', 'modifiedBy', 'createdBy' ] })",
+        "description": "(tsType: Omit<TenantConfig, 'deleted' | 'deletedBy' | 'deletedOn' | 'createdOn' | 'createdBy' | 'modifiedOn' | 'modifiedBy' | 'createdBy' | 'id'>, schemaOptions: {\n  exclude: [\n    'deleted',    'deletedBy',\n    'deletedOn',  'createdOn',\n    'createdBy',  'modifiedOn',\n    'modifiedBy', 'createdBy',\n    'id'\n  ]\n})",
         "properties": {
-          "id": {
-            "type": "string"
-          },
           "configKey": {
             "type": "string"
           },
@@ -2241,7 +2342,7 @@
           "tenantId"
         ],
         "additionalProperties": false,
-        "x-typescript-type": "Omit<TenantConfig, 'deleted' | 'deletedBy' | 'deletedOn' | 'createdOn' | 'createdBy' | 'modifiedOn' | 'modifiedBy' | 'createdBy'>"
+        "x-typescript-type": "Omit<TenantConfig, 'deleted' | 'deletedBy' | 'deletedOn' | 'createdOn' | 'createdBy' | 'modifiedOn' | 'modifiedBy' | 'createdBy' | 'id'>"
       },
       "TenantConfig": {
         "title": "TenantConfig",
