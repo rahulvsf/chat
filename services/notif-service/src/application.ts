@@ -1,33 +1,36 @@
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
+import {RepositoryMixin} from '@loopback/repository';
+import {RestApplication} from '@loopback/rest';
 import {
   RestExplorerBindings,
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
-import * as dotenv from 'dotenv';
-import * as dotenvExt from 'dotenv-extended';
-import {AuthenticationComponent} from 'loopback4-authentication';
+import {ServiceMixin} from '@loopback/service-proxy';
 import {
-  AuthorizationBindings,
-  AuthorizationComponent,
-} from 'loopback4-authorization';
-import {
-  ServiceSequence,
-  SFCoreBindings,
   BearerVerifierBindings,
   BearerVerifierComponent,
   BearerVerifierConfig,
   BearerVerifierType,
   SECURITY_SCHEME_SPEC,
+  ServiceSequence,
+  SFCoreBindings,
 } from '@sourceloop/core';
 import {NotificationServiceComponent} from '@sourceloop/notification-service';
-import {RepositoryMixin} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
-import {ServiceMixin} from '@loopback/service-proxy';
+import * as dotenv from 'dotenv';
+import * as dotenvExt from 'dotenv-extended';
+import * as admin from 'firebase-admin';
+import {ServiceAccount} from 'firebase-admin';
+import {AuthenticationComponent} from 'loopback4-authentication';
+import {
+  AuthorizationBindings,
+  AuthorizationComponent,
+} from 'loopback4-authorization';
+import {NotificationBindings} from 'loopback4-notifications';
+import {FcmBindings, FcmProvider} from 'loopback4-notifications/fcm';
 import path from 'path';
+import * as chatSFFirebaseJSON from './chat-sf.json';
 import * as openapi from './openapi.json';
-import { PubnubBindings, PubNubProvider } from 'loopback4-notifications/pubnub';
-import { NotificationBindings } from 'loopback4-notifications';
 
 export {ApplicationConfig};
 
@@ -78,16 +81,13 @@ export class NotifServiceApplication extends BootMixin(
     this.component(AuthenticationComponent);
 
     this.component(NotificationServiceComponent);
-    this.bind(PubnubBindings.Config).to({
-      subscribeKey: process.env.PUBNUB_SUBSCRIBE_KEY!,
-      publishKey: process.env.PUBNUB_PUBLISH_KEY,
-      secretKey: process.env.PUBNUB_SECRET_KEY,
-      ssl: true,
-      logVerbosity: true,
-      uuid: 'chat-app',
-      cipherKey: process.env.PUBNUB_CIPHER_KEY,
+
+    const firebaseApp = admin.initializeApp({
+      credential: admin.credential.cert(chatSFFirebaseJSON as ServiceAccount),
     });
-    this.bind(NotificationBindings.PushProvider).toProvider(PubNubProvider);
+
+    this.bind(FcmBindings.Config).to(firebaseApp);
+    this.bind(NotificationBindings.PushProvider).toProvider(FcmProvider);
 
     // Add bearer verifier component
     this.bind(BearerVerifierBindings.Config).to({
