@@ -17,5 +17,5 @@ export interface TokenLogin {
 export interface TokenSuccess {
   accessToken: string;
   refreshToken: string;
-  expires: number
+  expires: number;
 }

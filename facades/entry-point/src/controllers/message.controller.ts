@@ -19,12 +19,15 @@ import {authenticate, STRATEGY} from 'loopback4-authentication';
 import {authorize} from 'loopback4-authorization';
 import {Permissions} from '../enums';
 import {Message, MessageRecipient} from '../models';
-import {MessageAccessor} from '../services';
+import {FcmNotification} from '../models/fcm-notification.model';
+import {FcmNotificationAccessor, MessageAccessor} from '../services';
 
 export class MessageController {
   constructor(
     @inject('services.MessageAccessor')
     private readonly messageService: MessageAccessor,
+    @inject('services.FcmNotificationAccessor')
+    private readonly notificationService: FcmNotificationAccessor,
   ) {}
 
   @authenticate(STRATEGY.BEARER)
@@ -62,6 +65,16 @@ export class MessageController {
       messageId: postedMessage.id,
     });
     await this.messageService.postMessageRecipients(token, messageRecipient);
+
+    const notif = new FcmNotification({
+      subject: model.subject,
+      body: model.body,
+      receiver: {
+        to: [{type: 0, id: model.channelId}],
+      },
+    });
+
+    await this.notificationService.postNotification(token, notif);
     return postedMessage;
   }
 
