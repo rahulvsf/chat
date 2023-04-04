@@ -8,6 +8,10 @@ import {
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
 import {
+  AuthenticationServiceComponent,
+  SignUpBindings,
+} from '@sourceloop/authentication-service';
+import {
   BearerVerifierBindings,
   BearerVerifierComponent,
   BearerVerifierConfig,
@@ -25,6 +29,9 @@ import {
 } from 'loopback4-authorization';
 import path from 'path';
 import * as openapi from './openapi.json';
+import {GoogleSignUpProvider} from './providers/google-signup.provider';
+import {LocalSignUpTokenHandlerProvider} from './providers/local-signup-token-handler.provider';
+import {LocalSignUpProvider} from './providers/local-signup.provider';
 
 export {ApplicationConfig};
 
@@ -73,6 +80,19 @@ export class AuthServiceApplication extends BootMixin(
 
     // Add authentication component
     this.component(AuthenticationComponent);
+
+    this.component(AuthenticationServiceComponent);
+
+    this.bind(SignUpBindings.LOCAL_SIGNUP_PROVIDER).toProvider(
+      LocalSignUpProvider,
+    );
+    this.bind(SignUpBindings.SIGNUP_HANDLER_PROVIDER).toProvider(
+      LocalSignUpTokenHandlerProvider,
+    );
+    this.bind(SignUpBindings.GOOGLE_SIGN_UP_PROVIDER).toProvider(
+      GoogleSignUpProvider,
+    );
+
     // Add bearer verifier component
     this.bind(BearerVerifierBindings.Config).to({
       type: BearerVerifierType.service,
