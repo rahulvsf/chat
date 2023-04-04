@@ -16,16 +16,20 @@ import {
   ServiceSequence,
   SFCoreBindings,
 } from '@sourceloop/core';
+import {NotificationServiceComponent} from '@sourceloop/notification-service';
 import * as dotenv from 'dotenv';
 import * as dotenvExt from 'dotenv-extended';
+import * as admin from 'firebase-admin';
+import {ServiceAccount} from 'firebase-admin';
 import {AuthenticationComponent} from 'loopback4-authentication';
 import {
   AuthorizationBindings,
   AuthorizationComponent,
 } from 'loopback4-authorization';
-
+import {NotificationBindings} from 'loopback4-notifications';
+import {FcmBindings, FcmProvider} from 'loopback4-notifications/fcm';
 import path from 'path';
-
+import * as chatSFFirebaseJSON from './chat-sf.json';
 import * as openapi from './openapi.json';
 
 export {ApplicationConfig};
@@ -75,6 +79,15 @@ export class NotifServiceApplication extends BootMixin(
 
     // Add authentication component
     this.component(AuthenticationComponent);
+
+    this.component(NotificationServiceComponent);
+
+    const firebaseApp = admin.initializeApp({
+      credential: admin.credential.cert(chatSFFirebaseJSON as ServiceAccount),
+    });
+
+    this.bind(FcmBindings.Config).to(firebaseApp);
+    this.bind(NotificationBindings.PushProvider).toProvider(FcmProvider);
 
     // Add bearer verifier component
     this.bind(BearerVerifierBindings.Config).to({
