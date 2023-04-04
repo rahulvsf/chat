@@ -20,6 +20,7 @@ import {
   BearerVerifierType,
   SECURITY_SCHEME_SPEC,
 } from '@sourceloop/core';
+import {ChatServiceComponent} from '@sourceloop/chat-service';
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
@@ -73,6 +74,8 @@ export class ChatServiceApplication extends BootMixin(
 
     // Add authentication component
     this.component(AuthenticationComponent);
+
+    this.component(ChatServiceComponent);
 
     // Add bearer verifier component
     this.bind(BearerVerifierBindings.Config).to({
